@@ -1,6 +1,6 @@
 # Blueprint CI/CD cho RAG và guardrails
 
-Nhóm: Cuong-Solo
+Nhóm: sieunhandochanh
 
 Người phụ trách: Nguyễn Mạnh Cường - 2A202602650
 

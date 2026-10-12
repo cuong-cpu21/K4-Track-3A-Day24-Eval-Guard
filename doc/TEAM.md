@@ -1,8 +1,8 @@
 # Nhóm thực hiện K4 Track 3A
 
-Tên nhóm: Cuong-Solo
+Tên nhóm: sieunhandochanh
 
-Repo chung: https://github.com/cuong-cpu21/K4-Track-3A-Day24-Eval-Guard
+Repo chung: https://github.com/cuong-cpu21/K4-L3-DAY24-sieunhandochanh-Eval-Guard
 
 Trưởng nhóm/người nộp: Nguyễn Mạnh Cường - 2A202602650
 
