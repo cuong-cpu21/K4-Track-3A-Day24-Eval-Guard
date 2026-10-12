@@ -120,7 +120,12 @@ def judge_binary(question, answer, reference, *, client=None):
                 ensure_ascii=False)},
         ],
     )
-    result = json.loads(response.choices[0].message.content)
+    raw_content = response.choices[0].message.content.strip()
+    if raw_content.startswith("```"):
+        import re
+        raw_content = re.sub(r"^```(?:json)?\s*", "", raw_content)
+        raw_content = re.sub(r"\s*```$", "", raw_content)
+    result = json.loads(raw_content)
     if type(result.get("label")) is not int or result["label"] not in (0, 1):
         raise ValueError("Binary judge label must be integer 0 or 1.")
     if not isinstance(result.get("reasoning"), str) or not result["reasoning"].strip():

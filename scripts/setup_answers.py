@@ -145,9 +145,11 @@ def main(argv=None):
         client = OpenAI()
     t_start = time.time()
 
-    for i, item in enumerate(test_set):
+    from concurrent.futures import ThreadPoolExecutor
+
+    def process_item(item):
         answer, contexts, generation_mode, generation_model = run_query(item["question"], search, reranker, top_k, client)
-        answers.append({
+        return {
             "id":           item["id"],
             "distribution": item["distribution"],
             "question":     item["question"],
@@ -156,9 +158,11 @@ def main(argv=None):
             "ground_truth": item["ground_truth"],
             "generation_mode": generation_mode,
             "generation_model": generation_model,
-        })
-        if (i + 1) % 10 == 0:
-            print(f"  [{i+1}/{len(test_set)}] done ({time.time()-t_start:.0f}s elapsed)")
+        }
+
+    with ThreadPoolExecutor(max_workers=6) as executor:
+        answers = list(executor.map(process_item, test_set))
+    print(f"  All {len(answers)} queries done in {time.time()-t_start:.1f}s")
 
     os.makedirs(os.path.dirname(ANSWERS_PATH), exist_ok=True)
     with open(ANSWERS_PATH, "w", encoding="utf-8") as f:
